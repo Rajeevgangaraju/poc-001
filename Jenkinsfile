@@ -38,11 +38,11 @@ pipeline {
                     sh '/opt/dependency-check/bin/dependency-check.sh --project "POC-1" --scan . --format ALL --out . --noupdate || true'
                     // 2. FORCE create the report file if it doesn't exist
                     // This satisfies the Jenkins plugin so the build stays green
-                    sh '''
-                    if [ ! -f dependency-check-report.xml ]; then
-                        echo '<?xml version="1.0"?><analysis xmlns="https://jeremylong.github.io/DependencyCheck/dependency-check.2.5.xsd">POC-1 > dependency-check-report.xml'
-                    fi
-                    '''
+                    // sh '''
+                    // if [ ! -f dependency-check-report.xml ]; then
+                    //     echo '<?xml version="1.0"?><analysis xmlns="https://jeremylong.github.io/DependencyCheck/dependency-check.2.5.xsd">POC-1 > dependency-check-report.xml'
+                    // fi
+                    // '''
                     
                     // 3. Publish the report
                     dependencyCheckPublisher pattern: 'dependency-check-report.xml'
