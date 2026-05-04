@@ -24,7 +24,7 @@ pipeline {
                     def scannerHome = tool 'SonarScanner'
                     withSonarQubeEnv('SonarQubeServer') {
                         sh "${scannerHome}/bin/sonar-scanner \
-                        -Dsonar.organization=Rajeevgangaraju \
+                        -Dsonar.organization=rajeevgangaraju \
                         -Dsonar.projectKey=rajeevgangaraju \
                         -Dsonar.host.url=https://sonarcloud.io"
                     }
