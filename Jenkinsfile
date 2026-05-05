@@ -32,23 +32,22 @@ pipeline {
             }
         }
         stage('Dependency Scan') {
-    steps {
-        withCredentials([string(credentialsId: 'NVD_API_KEY', variable: 'NVD_API_KEY')]) {
-            script {
-                sh '''
-                  /opt/dependency-check/bin/dependency-check.sh \
-                  --project "POC-1" \
-                  --scan . \
-                  --format XML \
-                  --out dependency-check-report \
-                  --nvdApiKey $NVD_API_KEY \
-                  --noupdate || true
-                '''
+            steps {
+                withCredentials([string(credentialsId: 'NVD_API_KEY', variable: 'NVD_API_KEY')]) {
+                    script {
+                        sh '''
+                          /opt/dependency-check/bin/dependency-check.sh \
+                          --project "POC-1" \
+                          --scan . \
+                          --format XML \
+                          --out dependency-check-report \
+                          --nvdApiKey $NVD_API_KEY || true
+                        '''
+                    }
+                }
+                dependencyCheckPublisher pattern: 'dependency-check-report/dependency-check-report.xml'
             }
         }
-        dependencyCheckPublisher pattern: 'dependency-check-report/dependency-check-report.xml'
-    }
-}
 
 
 
