@@ -1,11 +1,19 @@
 FROM python:3.11-alpine
-# Install build dependencies for certain python packages
-RUN apk add --no-cache gcc musl-dev linux-headers
+
+# Set working directory inside the container
 WORKDIR /app
+
+# Copy dependency list first (best practice)
 COPY requirements.txt .
+
+# Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
-COPY . .
-# Delete the venv if it accidentally got copied
-RUN rm -rf venv
+
+# Copy application file into /app
+COPY app.py .
+
+# Expose Flask port
 EXPOSE 8000
+
+# Start the application
 CMD ["python", "app.py"]
