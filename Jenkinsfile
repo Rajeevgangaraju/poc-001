@@ -34,6 +34,7 @@ pipeline {
     steps {
         script {
             sh '''
+              mkdir -p dependency-check-report
               /opt/dependency-check/dependency-check/bin/dependency-check.sh \
               --project "POC-1" \
               --scan . \
@@ -42,7 +43,7 @@ pipeline {
               --data /var/lib/jenkins/odc-data || true
             '''
         }
-        dependencyCheckPublisher pattern: 'dependency-check-report/dependency-check-report.xml'
+        dependencyCheckPublisher pattern: 'dependency-check-report/*.xml'
     }
 }
 
