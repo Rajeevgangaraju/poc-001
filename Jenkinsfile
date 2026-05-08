@@ -18,19 +18,18 @@ pipeline {
             }
         }
 
-         stage('SonarQube Cloud Analysis') {
+         
+        stage('SonarQube Analysis') {
             steps {
                 script {
                     def scannerHome = tool 'SonarScanner'
                     withSonarQubeEnv('SonarQubeServer') {
-                        sh "${scannerHome}/bin/sonar-scanner \
-                        -Dsonar.organization=rajeevgangaraju \
-                        -Dsonar.projectKey=rajeevgangaraju \
-                        -Dsonar.host.url=https://sonarcloud.io"
+                        sh "${scannerHome}/bin/sonar-scanner"
                     }
                 }
             }
         }
+
         stage('Dependency Scan') {
     steps {
         withCredentials([string(credentialsId: 'NVD_API_KEY', variable: 'NVD_API_KEY')]) {
